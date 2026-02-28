@@ -1,6 +1,6 @@
 # node-builtin-sqlite-bench
 
-Simple benchmarks for comparing `node:sqlite` and `better-sqlite3`.
+Simple benchmark for comparing `node:sqlite` and `better-sqlite3`.
 
 Assumptions:
 
@@ -10,48 +10,26 @@ Assumptions:
 > [!NOTE]
 > Results vary by machine, OS, filesystem, and cache state.
 
-## Bench
+## Benchmark
 
+Conditions: `200000` rows, `10` runs per query, average ms.
+
+For details on the prepared statement cache, see [database.createTagStore](https://nodejs.org/api/sqlite.html#sqlite_database_createtagstore_maxsize)
+
+```text
+Query                            node:sqlite  node:sqlite(cached)  better-sqlite3
+-------------------------------  -----------  -------------------  --------------
+SELECT * FROM data WHERE id = ?  0.0072       0.0053               0.0021
+SELECT * FROM data LIMIT 10      0.0083       0.0074               0.0047
+SELECT * FROM data LIMIT 1000    0.5508       0.4210               0.3188
+SELECT * FROM data               51.92        47.54                32.66
 ```
-Driver          Query         Avg ms  Median ms  Min ms  Max ms
---------------  ------------  ------  ---------  ------  ------
-node:sqlite     point_lookup  0.005   0.003      0.003   0.013
-node:sqlite     limit_10      0.008   0.008      0.007   0.009
-node:sqlite     limit_1000    0.549   0.536      0.414   0.764
-node:sqlite     scan_all      148.3   137.7      129.3   196.3
-better-sqlite3  point_lookup  0.003   0.002      0.002   0.010
-better-sqlite3  limit_10      0.005   0.005      0.005   0.005
-better-sqlite3  limit_1000    0.292   0.282      0.275   0.374
-better-sqlite3  scan_all      103.4   99.69      98.56   137.2
-```
 
-## Queries
-
-- `SELECT * FROM data WHERE id = ?`
-- `SELECT * FROM data LIMIT 10`
-- `SELECT * FROM data LIMIT 1000`
-- `SELECT * FROM data`
-
-## Scripts
-
-Install dependencies:
+## Setup
 
 ```bash
 pnpm install
-```
-
-Generate a database:
-
-```bash
 pnpm run db:generate
-
-# or a larger database
-pnpm run db:generate:large
-```
-
-Run the benchmark:
-
-```bash
 pnpm run bench
 ```
 

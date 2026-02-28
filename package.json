@@ -4,10 +4,9 @@
   "packageManager": "pnpm@10.30.3",
   "license": "MIT",
   "scripts": {
-    "db:generate": "node bench/generate.js",
-    "db:generate:large": "node bench/generate.js --rows 200000",
+    "db:generate": "node bench/generate.js --rows 200000",
     "bench": "node --expose-gc bench/run.js",
-    "bench:json": "node --expose-gc bench/run.js --output results.json"
+    "bench:statement-cache": "node --expose-gc bench/run-statement-cache.js"
   },
   "engines": {
     "node": "25.7.0"
