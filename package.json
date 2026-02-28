@@ -1,0 +1,18 @@
+{
+  "name": "node-builtin-sqlite-bench",
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.30.3",
+  "license": "MIT",
+  "scripts": {
+    "db:generate": "node bench/generate.js",
+    "db:generate:large": "node bench/generate.js --rows 200000",
+    "bench": "node --expose-gc bench/run.js",
+    "bench:json": "node --expose-gc bench/run.js --output results.json"
+  },
+  "engines": {
+    "node": "25.7.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "12.6.2"
+  }
+}
